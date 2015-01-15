@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="AlmaDUploader.Pages.UploadStatus"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:app="clr-namespace:AlmaDUploader"
+             xmlns:util="clr-namespace:AlmaDUploader.Utils"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="300"
+             DataContext="{x:Static app:App.UploadManager}"
+             >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <util:BooleanValueInverter x:Key="Inverter" />
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <!-- Visibility="{Binding IsRunning, Converter={StaticResource Inverter}, ConverterParameter={StaticResource BooleanToVisibilityConverter}}"-->
+        <TextBox BorderThickness="0" Foreground="{DynamicResource WindowTextReadOnly}" 
+                 MouseDoubleClick="UploadStatus_DoubleClick">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsRunning}" Value="True">
+                            <Setter Property="Text" Value="Running"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=IsRunning}" Value="False">
+                            <Setter Property="Text" Value="Paused"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <TextBox BorderThickness="0" Foreground="{DynamicResource WindowTextReadOnly}"  
+                 MouseDoubleClick="UploadStatus_DoubleClick">
+            <TextBox.Text>
+                <MultiBinding StringFormat="{}... {0} of {1} uploading | {2} kb / s">
+                    <Binding Path="FilesUploading" Mode="OneWay" />
+                    <Binding Path="FilesWaiting" Mode="OneWay"/>
+                    <Binding Path="UploadSpeed" Mode="OneWay"/>
+                </MultiBinding>
+            </TextBox.Text>
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=FilesWaiting}" Value="0">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+    </StackPanel>
+</UserControl>

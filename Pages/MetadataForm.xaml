@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="AlmaDUploader.MetadataForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:app="clr-namespace:AlmaDUploader.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400"
+             >
+    <ScrollViewer>
+        <StackPanel MinWidth="200">
+            <TextBlock Text="Ingest Metadata" Style="{StaticResource Heading2}" Margin="0,0,0,8" />
+            <mui:BBCodeBlock BBCode="Enter the metadata for your ingest below. A metadata file will be created in the appropriate format when the ingest is submitted." Margin="0,0,0,16"/>
+
+            <!-- actual form starts here -->
+            <StackPanel x:Name="Form" Orientation="Vertical">
+
+                <StackPanel.Resources>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Orientation" Value="Horizontal" />
+                        <Setter Property="Margin" Value="0,0,0,4" />
+                    </Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Width" Value="100" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                        <Setter Property="Padding" Value="0,3" />
+                    </Style>
+                    <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+                        <Setter Property="Padding" Value="0,3" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <StackPanel>
+                    <Label Content="Title" Target="{Binding ElementName=txtTitle}"/>
+                    <TextBox x:Name="txtTitle" Width="150" Text="{Binding Title, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Author" Target="{Binding ElementName=txtAuthor}"/>
+                    <TextBox x:Name="txtAuthor" Width="150" Text="{Binding Author, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="ISBN" Target="{Binding ElementName=txtISBN}"/>
+                    <TextBox x:Name="txtISBN" Width="150" Text="{Binding ISBN, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Publisher" Target="{Binding ElementName=txtPublisher}"/>
+                    <TextBox x:Name="txtPublisher" Width="150" Text="{Binding Publisher, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Publication Date" Target="{Binding ElementName=txtPublicationDate}" />
+                    <DatePicker x:Name="txtPublicationDate" SelectedDate="{Binding PublicationDate, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Notes" Target="{Binding ElementName=txtPublicationDate}" />
+                    <TextBox x:Name="txtNotes" Width="150" MinLines="3" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Notes, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                </StackPanel>
+<!--
+                <Button Content="Submit" Margin="100,16,0,0" HorizontalAlignment="Left" />
+-->
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

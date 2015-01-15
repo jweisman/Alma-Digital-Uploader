@@ -1,0 +1,200 @@
+﻿<UserControl x:Class="AlmaDUploader.IngestFiles"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:core="clr-namespace:System;assembly=mscorlib"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:utils="clr-namespace:AlmaDUploader.Utils"
+             xmlns:pages="clr-namespace:AlmaDUploader.Pages"
+             mc:Ignorable="d" 
+             >
+    <UserControl.Resources>
+        <utils:FileSizeDisplayConverter x:Key="FileSizeDisplayConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+        <utils:BinaryImageConverter x:Key="ImageConverter" />
+    </UserControl.Resources>
+
+    <Grid PreviewDragOver="Files_DragOver" PreviewDrop="Files_Drop" AllowDrop="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <PathGeometry x:Key="AddIconData">F1 M 26.9193,36.4217L 31.6693,36.4217L 31.6693,44.3384L 39.586,44.3384L 39.586,49.0884L 31.6693,49.0884L 31.6693,57.0051L 26.9193,57.0051L 26.9193,49.0884L 19.0027,49.0884L 19.0027,44.3384L 26.9193,44.3384L 26.9193,36.4217 Z M 38.0053,19.0027L 57.0079,28.504L 38.0053,38.0053L 33.2529,35.6291L 33.2529,34.8382L 31.6711,34.8382L 19.0027,28.504L 38.0053,19.0027 Z M 57.0079,47.5066L 38.0053,57.008L 33.2529,54.6317L 33.2529,50.672L 38.0024,50.672L 38.0053,50.6737L 38.0088,50.672L 41.1693,50.672L 41.1694,49.0917L 50.6737,44.3395L 57.0079,47.5066 Z M 57.0079,38.0053L 41.1695,45.9245L 41.1695,42.7549L 38.0026,42.7549L 33.2529,42.7548L 33.2529,38.7962L 38.0053,41.1724L 50.6737,34.8382L 57.0079,38.0053 Z M 19.0027,38.0053L 25.336,34.8386L 25.3357,38.0053L 25.3358,41.1719L 19.0027,38.0053 Z</PathGeometry>
+            <PathGeometry x:Key="StartIconData">F1 M 49.0833,33.25C 53.4555,33.25 57,36.7944 57,41.1666C 57,45.5389 53.4045,48.9999 48.9999,49L 41,49L 41,43L 45,43L 39,37L 33,43L 37,43L 37,49L 23,49.0001C 20.8139,49 19,47.3111 19,45.125C 19,43.1866 20.3931,41.5737 22.2327,41.233L 22.1667,40.3749C 22.1667,37.3993 24.5122,34.9712 27.4553,34.8389C 28.7579,31.1462 32.2782,28.4999 36.4167,28.4999C 40.3458,28.4999 43.7179,30.8853 45.1637,34.2868C 46.3193,33.627 47.6573,33.25 49.0833,33.25 Z</PathGeometry>
+            <PathGeometry x:Key="CancelIconData">F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 38,23.75C 35.2116,23.75 32.6102,24.5509 30.4134,25.9352L 50.0648,45.5866C 51.4491,43.3898 52.25,40.7884 52.25,38C 52.25,30.13 45.87,23.75 38,23.75 Z M 23.75,38C 23.75,45.8701 30.1299,52.25 38,52.25C 40.7884,52.25 43.3897,51.4491 45.5865,50.0649L 25.9351,30.4136C 24.5509,32.6103 23.75,35.2117 23.75,38 Z</PathGeometry>
+            <PathGeometry x:Key="DeleteIconData">F1 M 25.3333,23.75L 50.6667,23.75C 51.5411,23.75 51.8541,27.3125 51.8541,27.3125L 24.1458,27.3125C 24.1458,27.3125 24.4589,23.75 25.3333,23.75 Z M 35.625,19.7917L 40.375,19.7917C 40.8122,19.7917 41.9583,20.9378 41.9583,21.375C 41.9583,21.8122 40.8122,22.9584 40.375,22.9584L 35.625,22.9584C 35.1878,22.9584 34.0416,21.8122 34.0416,21.375C 34.0416,20.9378 35.1878,19.7917 35.625,19.7917 Z M 27.7083,28.5L 48.2916,28.5C 49.1661,28.5 49.875,29.2089 49.875,30.0834L 48.2916,53.8334C 48.2916,54.7078 47.5828,55.4167 46.7083,55.4167L 29.2917,55.4167C 28.4172,55.4167 27.7083,54.7078 27.7083,53.8334L 26.125,30.0834C 26.125,29.2089 26.8339,28.5 27.7083,28.5 Z M 30.0833,31.6667L 30.4792,52.25L 33.25,52.25L 32.8542,31.6667L 30.0833,31.6667 Z M 36.4167,31.6667L 36.4167,52.25L 39.5833,52.25L 39.5833,31.6667L 36.4167,31.6667 Z M 43.1458,31.6667L 42.75,52.25L 45.5208,52.25L 45.9167,31.6667L 43.1458,31.6667 Z</PathGeometry>
+            <PathGeometry x:Key="SubmitIconData">F1 M 23.5,45.5L 30,52L 40.5,41.5L 44,45L 30,59L 20,49L 23.5,45.5 Z M 20,17L 43.25,17L 56,29.75L 56,59L 32,59L 36,55L 52,55L 52,34L 39,34L 39,21L 24,21L 24,43L 20,47L 20,17 Z M 20,59L 20,51L 28,59L 20,59 Z M 43,22.25L 43,30L 50.75,30L 43,22.25 Z</PathGeometry>
+            <PathGeometry x:Key="InfoIconData">F1 M 31.6666,30.0834L 42.7499,30.0834L 42.7499,33.2501L 42.7499,52.2501L 45.9165,52.2501L 45.9165,57.0001L 31.6666,57.0001L 31.6666,52.2501L 34.8332,52.2501L 34.8332,34.8335L 31.6666,34.8335L 31.6666,30.0834 Z M 38.7917,19C 40.9778,19 42.75,20.7722 42.75,22.9583C 42.75,25.1445 40.9778,26.9167 38.7917,26.9167C 36.6055,26.9167 34.8333,25.1445 34.8333,22.9583C 34.8333,20.7722 36.6055,19 38.7917,19 Z</PathGeometry>
+        </Grid.Resources>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical" Grid.Column="0">
+                <TextBlock Name="txtIngestName" Text="{Binding Path=Name}" Style="{StaticResource Heading2}" Margin="5"/>
+                <TextBlock Name="txtIngestInfo" Margin="5">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Total Size: {0} / Status: {1}">
+                            <Binding Path="FilesSize" Converter="{StaticResource FileSizeDisplayConverter}"/>
+                            <Binding Path="Status"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Name="txtErrorMessage" Text="{Binding Path=ErrorMessage}" Foreground="Red" TextWrapping="Wrap"/>
+                <Grid Margin="0,0,10,0">
+                    <ProgressBar Value="{Binding Path=Progress.Percent, Mode=OneWay}" Minimum="0" Maximum="100" >
+                        <ProgressBar.Style>
+                            <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource {x:Type ProgressBar}}">
+                                <Setter Property="Control.Visibility" Value="Hidden" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Status}" Value="Uploading">
+                                        <Setter Property="Control.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status}" Value="Pending">
+                                        <Setter Property="Control.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ProgressBar.Style>
+                    </ProgressBar>
+                    <TextBlock HorizontalAlignment="Center" Foreground="White" 
+                               Text="{Binding Path=Progress.Percent, StringFormat={}{0}%}">
+                        <TextBlock.Style>
+                            <Style>
+                                <Setter Property="Control.Visibility" Value="Hidden" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Status}" Value="Uploading">
+                                        <Setter Property="Control.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status}" Value="Pending">
+                                        <Setter Property="Control.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </StackPanel>
+            <StackPanel  HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
+                <StackPanel.Resources>
+                    <Style TargetType="mui:ModernButton" x:Key="btnDefault">
+                        <Setter Property="Margin" Value="0,0,8,0" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="IconWidth" Value="30" />
+                        <Setter Property="IconHeight" Value="30" />
+                        <Setter Property="EllipseStrokeThickness" Value="1" />
+                        <Setter Property="EllipseDiameter" Value="48" />
+                    </Style>
+                    <Style TargetType="mui:ModernButton" BasedOn="{StaticResource btnDefault}" x:Key="btnDisableSubmitted">
+                        <Setter Property="Control.IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Status}" Value="Submitted">
+                                <Setter Property="Control.IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="mui:ModernButton" BasedOn="{StaticResource btnDefault}" x:Key="btnSubmit">
+                        <Setter Property="Control.IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Status}" Value="Uploaded">
+                                <Setter Property="Control.IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+                <mui:ModernButton Name="btnUpload" IconData="{StaticResource StartIconData}"  Style="{StaticResource btnDisableSubmitted}" ToolTip="Start Upload" Click="UploadFiles_Click"/>
+                <mui:ModernButton Name="btnIngestMD" IconData="{StaticResource InfoIconData}" Style="{StaticResource btnDisableSubmitted}" ToolTip="Ingest Metadata" Click="IngestMetaData_Click"/>
+                <mui:ModernButton Name="btnCancel" IconData="{StaticResource CancelIconData}" Style="{StaticResource btnDisableSubmitted}" ToolTip="Cancel Upload" Click="Cancel_Click"/>
+                <mui:ModernButton Name="btnDelete" IconData="{StaticResource DeleteIconData}" Style="{StaticResource btnDefault}" ToolTip="Delete File" IsEnabled="False" Click="DeleteFiles_Click"/>
+                <mui:ModernButton Name="btnSubmit" IconData="{StaticResource SubmitIconData}" Style="{StaticResource btnSubmit}" ToolTip="Submit Ingest" Click="Submit_Click"/>
+                <mui:ModernButton Name="btnAddFiles" IconData="{StaticResource AddIconData}" Style="{StaticResource btnDisableSubmitted}" ToolTip="Add Files" Click="AddFiles_Click" />
+            </StackPanel>
+        </Grid>
+        <Grid ScrollViewer.CanContentScroll="True" Grid.Row="1">
+            <DataGrid Name="dgFiles" ItemsSource="{Binding Files}" AutoGenerateColumns="False" 
+                      IsReadOnly="True" SelectionUnit="FullRow" SelectionChanged="Files_Selected"
+                      CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Path=Thumbnail, Mode=OneTime, IsAsync=True, Converter={StaticResource ImageConverter}}"
+                                       MaxHeight="30" MaxWidth="60"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <mui:DataGridTextColumn Header="File Name" Binding="{Binding FileName}" Width="*" />
+                    <mui:DataGridTextColumn Header="File Type" Binding="{Binding FileType}" />
+                    <mui:DataGridTextColumn Header="Size" Binding="{Binding Path=FileSize, Converter={StaticResource FileSizeDisplayConverter}}"/>
+                    <mui:DataGridTextColumn Header="Status" Binding="{Binding Status}" >
+                        <mui:DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource Body_Content_DataGrid_Centering}">
+                                <Setter Property="ToolTip" Value="{Binding ErrorMessage}" />
+                            </Style>
+                        </mui:DataGridTextColumn.CellStyle>
+                    </mui:DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Progress" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid VerticalAlignment="Center">
+                                    <ProgressBar Value="{Binding Path=Progress.Percent, Mode=OneWay}" 
+                                                 Minimum="0" Maximum="100" Height="20">
+                                        <ProgressBar.Style>
+                                            <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource {x:Type ProgressBar}}">
+                                               
+                                                <Setter Property="Control.Visibility" Value="Hidden" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Status}" Value="Uploading">
+                                                        <Setter Property="Control.Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ProgressBar.Style>
+                                    </ProgressBar>
+                                    <TextBlock HorizontalAlignment="Center" Foreground="White">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}% | {1} kb / s">
+                                                <Binding Path="Progress.Percent"/>
+                                                <Binding Path="Progress.Speed"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                        <TextBlock.Style>
+                                            <Style>
+                                                <Setter Property="Control.Visibility" Value="Hidden" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Status}" Value="Uploading">
+                                                        <Setter Property="Control.Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock HorizontalAlignment="Center" Foreground="Black" Text="{Binding Path=Progress.Percent, StringFormat={}{0}%}">
+                                        <TextBlock.Style>
+                                            <Style>
+                                                <Setter Property="Control.Visibility" Value="Hidden" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Status}" Value="Uploaded">
+                                                        <Setter Property="Control.Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <mui:ModernProgressRing Name="progressFiles" IsActive="False" Width="80" Height="80"  />
+        </Grid>
+        <pages:UploadStatus  Margin="{StaticResource StatusMargin}"  Grid.Row="2"/>
+    </Grid>
+</UserControl>

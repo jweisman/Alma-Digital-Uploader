@@ -1,0 +1,29 @@
+﻿<mui:ModernWindow x:Class="AlmaDUploader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        Title="Alma Digital Uploader"  IsTitleVisible="True"
+        Height="500" Width="800"
+        ContentSource="/Pages/Ingests.xaml"
+        Closing="Window_Closing"
+        >
+    <mui:ModernWindow.TitleLinks>
+        <mui:Link DisplayName="Help" Source="http://google.com/" />
+    </mui:ModernWindow.TitleLinks>
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="Ingests" >
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Open" Source="/Pages/Ingests.xaml" />
+                <mui:Link DisplayName="Submitted" Source="/Pages/Ingests.xaml#submitted" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="Settings" >
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Software" Source="/Pages/Settings.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+    <Grid>
+        
+    </Grid>
+</mui:ModernWindow>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<collection>
+  <record>
+    <leader></leader>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">ISBN</subfield>
+    </datafield>
+  </record>
+  <datafield tag="100" ind1="1">
+    <subfield code="a">Author</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Title</subfield>
+  </datafield>
+  <datafield tag="260">
+    <subfield code="b">Publisher</subfield>
+    <subfield code="c">Publication Date</subfield>
+  </datafield>
+  <datafield tag="562">
+    <subfield code="a">Notes</subfield>
+  </datafield>
+</collection>
