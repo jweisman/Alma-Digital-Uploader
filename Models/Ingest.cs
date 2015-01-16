@@ -25,7 +25,6 @@ namespace AlmaDUploader.Models
             Progress = new Progress() { Percent = 0, Speed = 0 };
             Directory = Guid.NewGuid().ToString();
             Status = IngestStatus.New;
-            //MDImportProfile = 1;
             DateAdded = DateTime.Now;
             Metadata = new Metadata();
             Progress = new Progress();

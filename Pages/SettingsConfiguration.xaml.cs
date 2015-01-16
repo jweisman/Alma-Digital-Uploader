@@ -35,9 +35,9 @@ namespace AlmaDUploader
                 IsValid = true;
         }
 
-        private void SaveSettings_Click(object sender, RoutedEventArgs e)
+        private async void SaveSettings_Click(object sender, RoutedEventArgs e)
         {
-            TestSettings();
+            await TestSettings();
 
             if (IsValid)
             { 
@@ -53,7 +53,7 @@ namespace AlmaDUploader
             IsValid = false;
         }
 
-        private async void TestSettings()
+        private async Task TestSettings()
         {
             bbTestResults.Visibility = Visibility.Visible;
             bbTestResults.BBCode = "Testing configuration..." + Environment.NewLine;
