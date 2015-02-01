@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Deployment.Application;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -63,6 +64,18 @@ namespace AlmaDUploader.Utils
                 // The +1 is to avoid the directory separator
                 return fullFile.Substring(fullDirectory.Length + 1);
             }
+        }
+
+        /// <summary>
+        /// Returns data directory
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDataDirectory()
+        {
+            if (ApplicationDeployment.IsNetworkDeployed)
+                return ApplicationDeployment.CurrentDeployment.DataDirectory + @"\Data";
+            else
+                return System.AppDomain.CurrentDomain.BaseDirectory + "Data";
         }
 
         /// <summary>

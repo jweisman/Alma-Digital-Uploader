@@ -90,10 +90,10 @@ namespace AlmaDUploader
 
         }
 
-        public void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        public async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             if (!IsValid)
-                TestSettings();
+                await TestSettings();
 
             if (!IsValid)
                 e.Cancel = true;

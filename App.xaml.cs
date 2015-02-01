@@ -22,7 +22,21 @@ namespace AlmaDUploader
         protected static IngestsContext _db = new IngestsContext();
         public static IngestsContext DBContext
         {
-            get { return _db; }
+            get
+            {
+                try
+                {
+                    return _db;
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null)
+                        MessageBox.Show(ex.InnerException.Message);
+                    else
+                        MessageBox.Show(ex.Message);
+                    throw ex;
+                }
+            }
         }
 
         protected static Amazon.Runtime.AWSCredentials awsCredentials;
@@ -53,7 +67,7 @@ namespace AlmaDUploader
 
             MDImportProfiles mdImportProfiles;
 
-            using (FileStream stream = new FileStream(".\\Data\\MDImportProfiles.xml", FileMode.Open))
+            using (FileStream stream = new FileStream(Utils.Utilities.GetDataDirectory() + @"\MDImportProfiles.xml", FileMode.Open))
             {
                 XmlReader reader = new XmlTextReader(stream);
 

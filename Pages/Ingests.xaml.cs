@@ -303,6 +303,12 @@ namespace AlmaDUploader
             db.SaveChanges();
         }
 
+        private void cbCollections_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //TODO: Remove when this moves to a web service call
+            System.Diagnostics.Process.Start("notepad.exe", Utilities.GetDataDirectory() + @"\MDImportProfiles.xml");
+        }
+
         #endregion
 
         #region Helpers
@@ -344,9 +350,12 @@ namespace AlmaDUploader
 
         private void RefreshIngestList()
         {
-            CollectionViewSource csv = (CollectionViewSource)FindResource("IngestsView");
-            if (csv != null && csv.View != null)
-                csv.View.Refresh();
+            if (cbCollections.SelectedItem != null)
+            { 
+                CollectionViewSource csv = (CollectionViewSource)FindResource("IngestsView");
+                if (csv != null && csv.View != null)
+                    csv.View.Refresh();
+            }
         }
 
         private bool IsFoldersOnly(DragEventArgs args)

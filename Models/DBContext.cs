@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SQLite;
+using AlmaDUploader.Utils;
 
 namespace AlmaDUploader.Models
 {
@@ -11,6 +13,16 @@ namespace AlmaDUploader.Models
     {
         public DbSet<Ingest> Ingests { get; set; }
         public DbSet<IngestFile> IngestFiles { get; set; }
+
+        public IngestsContext()
+            : base(new SQLiteConnection()
+            {
+                ConnectionString =
+                    new SQLiteConnectionStringBuilder() { DataSource = Utilities.GetDataDirectory() + @"\alma-d-uploader.sqlite", ForeignKeys = true }
+                    .ConnectionString
+            }, true)
+        {
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
