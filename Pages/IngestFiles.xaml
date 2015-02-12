@@ -108,12 +108,12 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Resources>
-                <mui:ModernButton Name="btnUpload" IconData="{StaticResource StartIconData}"  Style="{StaticResource btnDisableSubmitted}" ToolTip="Start Upload" Click="UploadFiles_Click"/>
+                <mui:ModernButton Name="btnAddFiles" IconData="{StaticResource AddIconData}" Style="{StaticResource btnDisableSubmitted}" ToolTip="Add Files" Click="AddFiles_Click" />
                 <mui:ModernButton Name="btnIngestMD" IconData="{StaticResource InfoIconData}" Style="{StaticResource btnDisableSubmitted}" ToolTip="Ingest Metadata" Click="IngestMetaData_Click"/>
+                <mui:ModernButton Name="btnSubmit" IconData="{StaticResource SubmitIconData}" Style="{StaticResource btnSubmit}" ToolTip="Submit Ingest" Click="Submit_Click"/>
+                <mui:ModernButton Name="btnUpload" IconData="{StaticResource StartIconData}"  Style="{StaticResource btnDisableSubmitted}" ToolTip="Start Upload" Click="UploadFiles_Click"/>
                 <mui:ModernButton Name="btnCancel" IconData="{StaticResource CancelIconData}" Style="{StaticResource btnDisableSubmitted}" ToolTip="Cancel Upload" Click="Cancel_Click"/>
                 <mui:ModernButton Name="btnDelete" IconData="{StaticResource DeleteIconData}" Style="{StaticResource btnDefault}" ToolTip="Delete File" IsEnabled="False" Click="DeleteFiles_Click"/>
-                <mui:ModernButton Name="btnSubmit" IconData="{StaticResource SubmitIconData}" Style="{StaticResource btnSubmit}" ToolTip="Submit Ingest" Click="Submit_Click"/>
-                <mui:ModernButton Name="btnAddFiles" IconData="{StaticResource AddIconData}" Style="{StaticResource btnDisableSubmitted}" ToolTip="Add Files" Click="AddFiles_Click" />
             </StackPanel>
         </Grid>
         <Grid ScrollViewer.CanContentScroll="True" Grid.Row="1">

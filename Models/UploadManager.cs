@@ -324,6 +324,26 @@ namespace AlmaDUploader.Models
                     request.UploadProgressEvent += displayProgress;
                     await s3.UploadAsync(request, token);
                 }
+
+                // Upload thumbnail
+                if (Properties.Settings.Default.UploadThumbnails && file.Thumbnail != null)
+                {
+                    using (MemoryStream thumbnail = new MemoryStream(file.Thumbnail))
+                    { 
+                        TransferUtilityUploadRequest request = new TransferUtilityUploadRequest()
+                        {
+                            BucketName = Properties.Settings.Default.StorageBucket,
+                            Key = String.Format("{0}/upload/{1}/{2}/{3}",
+                                Properties.Settings.Default.InstitutionCode,
+                                file.Ingest.MDImportProfile,
+                                file.Ingest.Directory,
+                                file.FileName.Replace("\\", "/") + ".thumb"),
+                            InputStream = thumbnail
+                        };
+                        // request.UploadProgressEvent += displayProgress;
+                        await s3.UploadAsync(request, token);
+                    }
+                }
                 Done(file);
             }
             catch (Exception e)

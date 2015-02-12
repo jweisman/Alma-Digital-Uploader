@@ -18,6 +18,7 @@ using System.Xml.Serialization;
 namespace AlmaDUploader.Models
 {
     public enum IngestStatus { New, Pending, Waiting, Uploading, Uploaded, Submitted, Error };
+
     public class Ingest : INotifyPropertyChanged
     {
         public Ingest()
@@ -162,6 +163,9 @@ namespace AlmaDUploader.Models
 
         public async Task DeleteFilesFromStorage()
         {
+            // Cancel any files in progress
+            CancelUpload();
+
             IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetEndPoint());
             DeleteObjectsRequest request = new DeleteObjectsRequest();
             request.BucketName = Properties.Settings.Default.StorageBucket;

@@ -44,7 +44,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="0">
                 <TextBlock Text="Collection: " Style="{StaticResource Heading2}"  Margin="0,0,5,0" VerticalAlignment="Center"/>
-                <ComboBox Name="cbCollections" ItemsSource="{Binding}" Height="25" IsEditable="False" 
+                <ComboBox Name="cbCollections" ItemsSource="{Binding}" Height="25" IsEditable="False" MaxWidth="200"
                           VerticalAlignment="Center" SelectionChanged="Collection_Changed" MouseDoubleClick="cbCollections_DoubleClick"/>
                 <mui:ModernButton IconData="{StaticResource RefreshIconData}" IconWidth="10" IconHeight="10" Margin="2" Click="RefreshCollections_Click"/>
                 <mui:ModernButton IconData="{StaticResource InfoIconData}" IconWidth="10" IconHeight="10" Margin="2" Click="MDProfileInfo_Click"/>
@@ -60,12 +60,12 @@
                         <Setter Property="EllipseDiameter" Value="48" />
                     </Style>
                 </StackPanel.Resources>
-                <mui:ModernButton IconData="{StaticResource AddIconData}" ToolTip="Add Ingest" Click="AddIngest_Click"/>
+                <mui:ModernButton Name="btnAddIngest" IconData="{StaticResource AddIconData}" ToolTip="Add Ingest" Click="AddIngest_Click"/>
                 <mui:ModernButton Name="btnIngestMD" IconData="{StaticResource InfoIconData}" ToolTip="Ingest Metadata" Click="IngestMetaData_Click" IsEnabled="False"/>
+                <mui:ModernButton Name="btnSubmit" IconData="{StaticResource SubmitIconData}" ToolTip="Submit Ingest" IsEnabled="False" Click="IngestSubmit_Click"/>
                 <mui:ModernButton Name="btnUpload" IconData="{StaticResource StartIconData}" ToolTip="Start Upload" Click="IngestUpload_Click" IsEnabled="False"/>
                 <mui:ModernButton Name="btnCancel" IconData="{StaticResource CancelIconData}" ToolTip="Cancel Upload" IsEnabled="False" Click="CancelUpload_Click"/>
                 <mui:ModernButton Name="btnDelete" IconData="{StaticResource DeleteIconData}" ToolTip="Delete Ingest" IsEnabled="False" Click="IngestDelete_Click"/>
-                <mui:ModernButton Name="btnSubmit" IconData="{StaticResource SubmitIconData}" ToolTip="Submit Ingest" IsEnabled="False" Click="IngestSubmit_Click"/>
             </StackPanel>
         </Grid>
         <Grid ScrollViewer.CanContentScroll="True" Grid.Row="1">

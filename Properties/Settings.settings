@@ -35,5 +35,8 @@
     <Setting Name="WindowWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">800</Value>
     </Setting>
+    <Setting Name="UploadThumbnails" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

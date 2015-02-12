@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using System.Xml.Serialization;
@@ -342,6 +343,21 @@ namespace AlmaDUploader.Utils
         }
 
     } 
+
+    public class SaveSettingsCommand : ICommand
+    {
+        public void Execute(object parameter)
+        {
+            Properties.Settings.Default.Save();
+        }
+        
+        public Boolean CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
 
     #endregion
 

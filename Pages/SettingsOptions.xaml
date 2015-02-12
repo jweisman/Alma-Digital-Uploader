@@ -13,6 +13,7 @@
 
     <UserControl.Resources>
         <util:BooleanValueInverter x:Key="Inverter"/>
+        <util:SaveSettingsCommand x:Key="SaveSettingsCommand"/>
     </UserControl.Resources>
     <ScrollViewer>
         <StackPanel MinWidth="200">
@@ -41,24 +42,28 @@
                 <StackPanel>
                     <Label Content="Upload files" Target="{Binding BindingGroupName=UploadFiles}"/>
                         <StackPanel Orientation="Vertical">
-                        <RadioButton Content="when added" Margin="0,0,0,4" GroupName="UploadFiles" 
+                        <RadioButton Content="when added" Margin="0,0,0,4" GroupName="UploadFiles" Command="{StaticResource SaveSettingsCommand}"
                                      IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=UploadOnAdd, Mode=TwoWay}" />
-                        <RadioButton Content="manually" Margin="0,0,0,4" GroupName="UploadFiles"  
+                        <RadioButton Content="manually" Margin="0,0,0,4" GroupName="UploadFiles"  Command="{StaticResource SaveSettingsCommand}"
                                      IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=UploadOnAdd, Mode=TwoWay, Converter={StaticResource Inverter}}"/>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel>
-                    <Label Content="Submit ingest" Target="{Binding BindingGroupName=SubmitIngest}"/>
+                    <Label Content="Submit ingests" Target="{Binding BindingGroupName=SubmitIngest}"/>
                     <StackPanel Orientation="Vertical">
-                        <RadioButton Content="when ready" Margin="0,0,0,4" GroupName="SubmitIngest" 
+                        <RadioButton Content="when ready" Margin="0,0,0,4" GroupName="SubmitIngest" Command="{StaticResource SaveSettingsCommand}"
                                      IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=SubmitWhenReady, Mode=TwoWay}" />
-                        <RadioButton Content="manually" Margin="0,0,0,4" GroupName="SubmitIngest"  
+                        <RadioButton Content="manually" Margin="0,0,0,4" GroupName="SubmitIngest" Command="{StaticResource SaveSettingsCommand}"
                                      IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=SubmitWhenReady, Mode=TwoWay, Converter={StaticResource Inverter}}"/>
                     </StackPanel>
                 </StackPanel>
 
-                <Button Click="SaveSettings_Click" Content="Save" Margin="150,16,0,16" HorizontalAlignment="Left" />
+                <StackPanel>
+                    <Label Content="Upload thumbnails" Target="{Binding BindingGroupName=SubmitIngest}"/>
+                    <CheckBox Name="chkUploadThumbnails" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=UploadThumbnails, Mode=TwoWay}" 
+                                Command="{StaticResource SaveSettingsCommand}"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

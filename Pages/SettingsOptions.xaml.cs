@@ -25,11 +25,6 @@ namespace AlmaDUploader
             InitializeComponent();
             this.DataContext = new Models.OptionsViewModel();
         }
-
-        private void SaveSettings_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.Save();
-        }
     }
 }
 namespace AlmaDUploader.Models

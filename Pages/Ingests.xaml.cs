@@ -208,7 +208,8 @@ namespace AlmaDUploader
 
             await Task.WhenAll(ingests);
 
-            db.Ingests.AddRange(ingests.Select(i => i.Result).ToList());
+            // Get non-null results
+            db.Ingests.AddRange(ingests.Where(i => i.Result != null).Select(i => i.Result).ToList());
             db.SaveChanges();
             pbIngests.IsActive = false;
         }
@@ -380,7 +381,19 @@ namespace AlmaDUploader
             Ingest ingest = new Ingest();
             ingest.Name = System.IO.Path.GetFileName(path);
             ingest.MDImportProfile = mdImportProfileId;
-            // ObservableHashSet<IngestFile> files = new ObservableHashSet<IngestFile>();
+
+            // If we're not connected, show an error
+            try
+            {
+                await ingest.Lock();
+            }
+            catch (Amazon.Runtime.AmazonServiceException e)
+            {
+                MessageBox.Show("It appears you're not connected to the Internet. Your ingest cannot be added at this time.",
+                    "Cannot add ingest", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return null;
+            }
+
             // loop through files
             await Task.Run(() =>
             {
@@ -402,7 +415,6 @@ namespace AlmaDUploader
                 }
             });
 
-            await ingest.Lock();
             return ingest;
         }
 

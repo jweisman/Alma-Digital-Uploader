@@ -98,6 +98,9 @@ namespace AlmaDUploader.Models
 
         public async Task DeleteFromStorage()
         {
+            // In case file is being uploaded, cancel
+            CancelUpload();
+
             if (Status != IngestFileStatus.Uploaded)
                 return;
 
