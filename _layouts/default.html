@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+
+    {% include header.html %}
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+        {{ content }}
+        </section>
+
+        <aside id="sidebar">
+          <a class="btn btn-lg" href="download.html">
+          <i class="fa fa-download fa-lg"> </i>&nbsp;&nbsp;Download</a>
+
+          <a class="btn btn-lg" href="help.html">
+          <i class="fa fa-info-circle fa-lg"> </i>&nbsp;&nbsp;Help</a>
+
+          {% unless page.url == "/index.html" %}
+          <a class="btn btn-lg" href="./">
+          <i class="fa fa-home fa-lg"> </i>&nbsp;&nbsp;Home</a>
+          {% endunless %}
+        </aside>
+      </div>
+    </div>
+
+    {% include footer.html %}
+
+  </body>
+
+</html>

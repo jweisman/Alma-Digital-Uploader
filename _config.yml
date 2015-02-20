@@ -1,0 +1,12 @@
+# Site settings
+title: Alma Digital Uploader
+email: your-email@domain.com
+description: Download and get help for the Alma Digital Uploader
+baseurl: /Alma-Digital-Uploader
+#url: "http://jweisman.github.io" # the base hostname & protocol for your site
+#twitter_username: jekyllrb
+#github_username:  jekyll
+
+# Build settings
+markdown: redcarpet
+pygments: true
