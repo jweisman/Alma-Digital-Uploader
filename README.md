@@ -25,6 +25,7 @@ This applicaiton uses the excellent [Modern UI for WPF][1].
 ## License
 This application is provided under the [MIT license], which means in short that you can do with it as you please.
 
+[minisite]:http://jweisman.github.io/Alma-Digital-Uploader/
 [MIT license]:http://opensource.org/licenses/MIT
 [Alma]:http://www.exlibrisgroup.com/category/AlmaOverview
 [1]:https://mui.codeplex.com/
