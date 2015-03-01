@@ -46,6 +46,14 @@ namespace AlmaDUploader
             ViewSubmitted = false;
             InitializeComponent();
             LoadCollections();
+
+            // Watch for an updated collection file
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = Utils.Utilities.GetDataDirectory();
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            watcher.Filter = "MDImportProfiles.xml";
+            watcher.Changed += new FileSystemEventHandler(OnCollectionsChanged);
+            watcher.EnableRaisingEvents = true;
         }
 
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
@@ -257,7 +265,7 @@ namespace AlmaDUploader
             var ingests = (dgIngests.SelectedItems.Count == 0) ?
                 dgIngests.Items.Cast<Ingest>().Where(i => i.Status == IngestStatus.Pending || i.Status == IngestStatus.New).ToList() :
                 dgIngests.SelectedItems.Cast<Ingest>().ToList();
-            // List<Ingest> ingests = dgIngests.SelectedItems.Cast<Ingest>().ToList();
+
             foreach (var ingest in ingests)
             {
                 foreach (var file in ingest.Files.Where(f => f.Status == IngestFileStatus.New))
@@ -269,7 +277,6 @@ namespace AlmaDUploader
 
         private async void IngestSubmit_Click(object sender, RoutedEventArgs e)
         {
-            //dgIngests.SelectedItems.Cast<Ingest>().ToList().ForEach(i => i.Submit());
             pbIngests.IsActive = true;
             var tasks = dgIngests.SelectedItems.Cast<Ingest>().ToList().Select(
                 i => i.Submit());
@@ -306,7 +313,6 @@ namespace AlmaDUploader
 
         private void cbCollections_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //TODO: Remove when this moves to a web service call
             System.Diagnostics.Process.Start("notepad.exe", Utilities.GetDataDirectory() + @"\MDImportProfiles.xml");
         }
 
@@ -314,19 +320,28 @@ namespace AlmaDUploader
 
         #region Helpers
 
-        private void LoadCollections()
+        private void LoadCollections(bool hardRefresh = true)
         {
             cbCollections.ItemsSource = null;
             cbCollections.Items.Clear();
             cbCollections.Items.Add("Loading...");
 
-            App.LoadCollections();
+            if (hardRefresh) App.LoadCollections();
+            else App.LoadCollectionsFromFile();
 
             cbCollections.Items.Clear();
             cbCollections.DisplayMemberPath = "DisplayName";
             cbCollections.SelectedValuePath = "Id";
             cbCollections.ItemsSource = App.MDImportProfiles.Values;
             cbCollections.SelectedIndex = 0;
+        }
+
+        private void OnCollectionsChanged(object sender, FileSystemEventArgs e)
+        {
+            App.Current.Dispatcher.Invoke((Action)delegate()
+            {
+                LoadCollections(false);
+            });
         }
 
         private async void LoadIngests()
@@ -387,7 +402,7 @@ namespace AlmaDUploader
             {
                 await ingest.Lock();
             }
-            catch (Amazon.Runtime.AmazonServiceException e)
+            catch (Amazon.Runtime.AmazonServiceException)
             {
                 MessageBox.Show("It appears you're not connected to the Internet. Your ingest cannot be added at this time.",
                     "Cannot add ingest", MessageBoxButton.OK, MessageBoxImage.Warning);

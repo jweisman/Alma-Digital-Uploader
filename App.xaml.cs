@@ -63,6 +63,12 @@ namespace AlmaDUploader
         public static void LoadCollections()
         {
             // TOTO: Make load asynchornous when using REST
+            // Load from web service and save file
+            LoadCollectionsFromFile();
+        }
+
+        public static void LoadCollectionsFromFile()
+        {
             _mdImportProfiles.Clear();
 
             MDImportProfiles mdImportProfiles;
@@ -88,6 +94,28 @@ namespace AlmaDUploader
                   typeof(FrameworkElement),
                   new FrameworkPropertyMetadata(
                       XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+
+            Application.Current.DispatcherUnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(AppDispatcherUnhandledException);
+        }
+
+        void AppDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            if (System.Diagnostics.Debugger.IsAttached)   // In debug mode do not custom-handle the exception, let Visual Studio handle it
+                e.Handled = false;
+            else
+                ShowUnhandeledException(e);
+        }
+
+        void ShowUnhandeledException(System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+
+            string errorMessage = string.Format("An application error occurred.\n",
+                e.Exception.Message + (e.Exception.InnerException != null ? "\n" +
+                e.Exception.InnerException.Message : null));
+
+            MessageBox.Show(errorMessage, "Application Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Application.Current.Shutdown();
         }
     }
 }

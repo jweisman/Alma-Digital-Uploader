@@ -356,7 +356,11 @@ namespace AlmaDUploader.Utils
             return true;
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
     }
 
     #endregion

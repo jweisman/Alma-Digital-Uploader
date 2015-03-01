@@ -8,7 +8,7 @@
         Closing="Window_Closing"
         >
     <mui:ModernWindow.TitleLinks>
-        <mui:Link DisplayName="Help" Source="http://jweisman.github.io/Alma-D-Uploader/help.html" />
+        <mui:Link DisplayName="Help" Source="http://jweisman.github.io/Alma-Digital-Uploader/help.html" />
     </mui:ModernWindow.TitleLinks>
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Ingests" >
