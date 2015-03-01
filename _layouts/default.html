@@ -5,31 +5,52 @@
 
   <body>
 
-    {% include header.html %}
-
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-        {{ content }}
-        </section>
-
-        <aside id="sidebar">
-          <a class="btn btn-lg" href="download.html">
-          <i class="fa fa-download fa-lg"> </i>&nbsp;&nbsp;Download</a>
-
-          <a class="btn btn-lg" href="help.html">
-          <i class="fa fa-info-circle fa-lg"> </i>&nbsp;&nbsp;Help</a>
-
-          {% unless page.url == "/index.html" %}
-          <a class="btn btn-lg" href="./">
-          <i class="fa fa-home fa-lg"> </i>&nbsp;&nbsp;Home</a>
-          {% endunless %}
-        </aside>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="./" class="navbar-brand">Alma Digital Uploader</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="./">Home</a>
+            </li>
+            <li>
+              <a href="download.html">Download</a>
+            </li>
+            <li>
+              <a href="help.html">Help</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    {% include footer.html %}
 
+    <div class="container">
+
+	  	{{ content }}
+
+	  	{% include footer.html %}
+	 </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="scripts/bootswatch.js"></script>
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-58964957-1");
+        pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
   </body>
-
 </html>

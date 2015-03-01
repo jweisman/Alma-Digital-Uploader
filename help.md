@@ -3,10 +3,9 @@ layout: default
 title: Alma Digital Uploader - Help
 ---
 
-<h1>
-<a id="alma-digital-uploader" class="anchor" href="#alma-digital-uploader" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help</h1>
+<h1>Help</h1>
 
-<h2><a id="toc" class="anchor" href="#toc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+## <a id="toc"></a>Table of Contents 
 
 * <a href="#settings">Settings</a>
  * <a href="#settings-configuration">Configuration</a>
@@ -221,10 +220,6 @@ Digital representations in Alma Digital are flat. However, the Uploader maintain
 <p><a href="#toc">Top</a></p>
 <hr/>
 
- 
- 
- 
- 
  
  
  
