@@ -13,6 +13,10 @@ title: Alma Digital Uploader - Download
           </p>
 		<p>The Alma Digital Uploader runs on Windows 7 or 8.</p>
 		<h2>Installation Instructions</h2>
+		<div id="nosupport">
+		<p>It appears you're not using either Windows 7 or 8. Please note the Alma Digital Uploader is only supported on those versions.</p>
+		</div>
+		<div id="windows7" style="display: none">
 		<h3>Windows 7</h3>
 		<p>Click the button above to download the AlmaDUploaderSetup.exe file.</p>
 		<p>Run the AlmaDUploaderSetup.exe from your download folder. When prompted, agree to run the file.</p>
@@ -25,8 +29,40 @@ title: Alma Digital Uploader - Download
 		<p>To open the application later, use the shortcut in your Start menu.</p>
 		<img src="images/install/windows7/start-menu.png"/>
 		<p>&nbsp;</p>
+		</div>
+		<div id="windows8" style="display: none">
 		<h3>Windows 8</h3>
-
-		<p>Instructions for installing on Windows 8.</p>
+		<p>Click the button above to download the AlmaDUploaderSetup.exe file.</p>
+		<p>Windows 8 provides security checks which may cause additional confirmation windows to appear. When you download the AlmaDUploaderSetup.exe file, your browser may prompt you to discard the file. Click the down arrow and then click the "Keep" option.<p>
+		<img src="images/install/windows8/dangerous.png"/>
+		<p>&nbsp;</p>
+		<p>Double click the AlmaDUploaderSetup.exe file to run it. Windows may display a screen which warns against running the file.</p>
+		<img src="images/install/windows8/more-info.png"/>
+		<p>&nbsp;</p>
+		<p>Click the More Info link, and then click "Run anyway"</p>
+		<img src="images/install/windows8/runanyway.png"/>
+		<p>&nbsp;</p>
+		<p>When prompted, agree to install the application.</p>
+		<img src="images/install/windows8/install.png"/>
+		<p>&nbsp;</p>
+		<p>The application will download and install. Once complete, Windows may again display a screen which warns against running the file. Select the "More info" link again, then click "Run anyway."</p>
+		<img src="images/install/windows8/exe-runanyway.png"/>
+		<p>&nbsp;</p>
+		<p>The application will then open automatically.<p>
+		<p>To open the application later, use the shortcut in your Start Menu.</p>
+		</div>
         </div>
     </div>
+
+<script>
+
+if (navigator.userAgent.indexOf("NT 6.1") >= 0) {
+	 document.getElementById('windows7').style.display = 'block';
+	 document.getElementById('nosupport').style.display = 'none';
+} else if (navigator.userAgent.indexOf("NT 6.2") || navigator.userAgent.indexOf("NT 6.3") >= 0) {
+	 document.getElementById('windows8').style.display = 'block';
+	 document.getElementById('nosupport').style.display = 'none';
+}
+
+
+</script>
