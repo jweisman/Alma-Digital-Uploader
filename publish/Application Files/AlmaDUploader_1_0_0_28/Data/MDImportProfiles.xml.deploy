@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<md_import_profiles>
+  <md_import_profile>
+    <collection_name>Theses</collection_name>
+    <id>77463736272</id>
+    <name>Upload Theses</name>
+    <md_file_name>marc.xml</md_file_name>
+    <md_format>MarcXml</md_format>
+  </md_import_profile>
+  <md_import_profile>
+    <collection_name>Albums</collection_name>
+    <id>887622998747</id>
+    <name>Upload Albums</name>
+    <md_file_name>marc.xml</md_file_name>
+    <md_format>MarcXml</md_format>
+  </md_import_profile>
+</md_import_profiles>
