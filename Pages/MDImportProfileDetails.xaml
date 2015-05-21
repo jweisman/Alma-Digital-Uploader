@@ -32,7 +32,7 @@
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Collection Name" Target="{Binding ElementName=TextIngestName}" Style="{StaticResource HeadingLabel}"/>
-                    <Label Content="{Binding Path=Collection}" />
+                    <Label Content="{Binding Path=Digital.CollectionName}" />
                 </StackPanel>
                 <StackPanel>
                     <Label Content="MD File Name" Target="{Binding ElementName=TextIngestName}" Style="{StaticResource HeadingLabel}"/>

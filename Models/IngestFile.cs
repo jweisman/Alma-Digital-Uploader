@@ -64,6 +64,10 @@ namespace AlmaDUploader.Models
         {
             get
             {
+                // Don't make thumbnail for MD files or files with thumbnails
+                if (this.FileName == App.MDImportProfiles.Profiles[this.Ingest.MDImportProfile].MDFileName || 
+                    this.Ingest.Files.Any(f => f.FileName == this.FileName + ".thumb"))
+                    return null;
                 if (_thumbnail == null)
                 {
                     // best effort
@@ -104,11 +108,24 @@ namespace AlmaDUploader.Models
             if (Status != IngestFileStatus.Uploaded)
                 return;
 
-            await S3Utilities.DeleteFile(String.Format("{0}/upload/{1}/{2}/{3}",
-                    Properties.Settings.Default.InstitutionCode,
-                    Ingest.MDImportProfile,
-                    Ingest.Directory,
-                    this.FileName.Replace("\\", "/")));
+            IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetEndPoint());
+            DeleteObjectsRequest request = new DeleteObjectsRequest();
+            request.BucketName = Properties.Settings.Default.StorageBucket;
+            
+            request.AddKey(String.Format("{0}/upload/{1}/{2}/{3}",
+                Properties.Settings.Default.InstitutionCode,
+                Ingest.MDImportProfile,
+                Ingest.Directory,
+                this.FileName.Replace("\\", "/")));
+
+            // try to delete thumbnail if exists
+            request.AddKey(String.Format("{0}/upload/{1}/{2}/{3}.thumb",
+                Properties.Settings.Default.InstitutionCode,
+                Ingest.MDImportProfile,
+                Ingest.Directory,
+                this.FileName.Replace("\\", "/")));
+            
+            DeleteObjectsResponse response = await client.DeleteObjectsAsync(request);
         }
 
         public void CancelUpload()

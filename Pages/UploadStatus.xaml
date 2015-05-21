@@ -33,7 +33,7 @@
         <TextBox BorderThickness="0" Foreground="{DynamicResource WindowTextReadOnly}"  
                  MouseDoubleClick="UploadStatus_DoubleClick">
             <TextBox.Text>
-                <MultiBinding StringFormat="{}... {0} of {1} uploading | {2} kb / s">
+                <MultiBinding StringFormat="{}... uploading {0} of {1} files | {2} kb / s">
                     <Binding Path="FilesUploading" Mode="OneWay" />
                     <Binding Path="FilesWaiting" Mode="OneWay"/>
                     <Binding Path="UploadSpeed" Mode="OneWay"/>

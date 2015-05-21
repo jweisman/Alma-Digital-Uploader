@@ -95,11 +95,11 @@ namespace AlmaDUploader.Models
                     return false;
 
                 string metadata =
-                    Metadata.ToMetadataFormat(App.MDImportProfiles[this.MDImportProfile].MDFormat);
+                    Metadata.ToMetadataFormat(App.MDImportProfiles.Profiles[this.MDImportProfile].MDFormat);
                 if (metadata != null)
                     return true;
 
-                string mdFileName = App.MDImportProfiles[this.MDImportProfile].MDFileName;
+                string mdFileName = App.MDImportProfiles.Profiles[this.MDImportProfile].MDFileName;
                 if (this.Files.Any(f => f.FileName == mdFileName))
                     return true;
 
@@ -133,7 +133,7 @@ namespace AlmaDUploader.Models
                 return;
 
             string metadata =
-                Metadata.ToMetadataFormat(App.MDImportProfiles[this.MDImportProfile].MDFormat);
+                Metadata.ToMetadataFormat(App.MDImportProfiles.Profiles[this.MDImportProfile].MDFormat);
 
             if (metadata != null)
             {
@@ -141,12 +141,12 @@ namespace AlmaDUploader.Models
                         Properties.Settings.Default.InstitutionCode,
                         this.MDImportProfile,
                         this.Directory,
-                        App.MDImportProfiles[this.MDImportProfile].MDFileName),
+                        App.MDImportProfiles.Profiles[this.MDImportProfile].MDFileName),
                         metadata);
             }
             else // confirm there is a file with the MD name
             {
-                string mdFileName = App.MDImportProfiles[this.MDImportProfile].MDFileName;
+                string mdFileName = App.MDImportProfiles.Profiles[this.MDImportProfile].MDFileName;
                 if (!this.Files.Any(f => f.FileName == mdFileName))
                 {
                     this.ErrorMessage = String.Format("No file with the name {0} exists. Ingest cannot be submitted for processing.",
@@ -174,11 +174,20 @@ namespace AlmaDUploader.Models
                 foreach (IngestFile file in Files)
                 {
                     if (file.Status == IngestFileStatus.Uploaded)
+                    { 
                         request.AddKey(String.Format("{0}/upload/{1}/{2}/{3}",
                             Properties.Settings.Default.InstitutionCode,
                             this.MDImportProfile,
                             this.Directory,
                             file.FileName.Replace("\\", "/")));
+
+                        // try to delete thumbnail if exists
+                        request.AddKey(String.Format("{0}/upload/{1}/{2}/{3}.thumb",
+                            Properties.Settings.Default.InstitutionCode,
+                            this.MDImportProfile,
+                            this.Directory,
+                            file.FileName.Replace("\\", "/")));
+                    }
                 }
                 DeleteObjectsResponse response = await client.DeleteObjectsAsync(request);
             }
@@ -278,36 +287,5 @@ namespace AlmaDUploader.Models
         public int Percent { get; set; }
         public double Speed { get; set; }
         public long BytesTransferred { get; set; }
-    }
-
-    [XmlRoot("md_import_profile")]
-    public class MDImportProfile
-    {
-        [XmlElement("id")]
-        public long Id { get; set; }
-        [XmlElement("name")]
-        public string Name { get; set; }
-        [XmlElement("collection_name")]
-        public string Collection { get; set; }
-        [XmlElement("md_file_name")]
-        public string MDFileName { get; set; }
-        [XmlElement("md_format")]
-        public string MDFormat { get; set; }
-        public string DisplayName
-        {
-            get { return String.Format("{0} ({1})", Collection, Name); }
-        }
-    }
-
-    [XmlRoot("md_import_profiles")]
-    public class MDImportProfiles
-    {
-        public MDImportProfiles()
-        {
-            Profiles = new List<MDImportProfile>();
-        }
-
-        [XmlElement("md_import_profile")]
-        public List<MDImportProfile> Profiles { get; set; }
     }
 }
