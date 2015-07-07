@@ -36,7 +36,7 @@ namespace AlmaDUploader.Models
 
                 try
                 {
-                    var xml = await client.GetStringAsync(String.Format("{0}/conf/md_import_profiles?type=REPOSITORY&ie_type=DIGITAL",
+                    var xml = await client.GetStringAsync(String.Format("{0}/conf/md-import-profiles?type=REPOSITORY&ie_type=DIGITAL",
                         System.Configuration.ConfigurationManager.AppSettings["AlmaApiUrl"]));
 
                     this.Profiles.Clear();

@@ -29,7 +29,7 @@
     <SupportUrl>http://jweisman.github.io/Alma-Digital-Uploader/help.html</SupportUrl>
     <ProductName>Alma Digital Uploader</ProductName>
     <PublisherName>Alma Digital</PublisherName>
-    <ApplicationRevision>29</ApplicationRevision>
+    <ApplicationRevision>31</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

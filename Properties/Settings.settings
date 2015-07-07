@@ -21,7 +21,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="UploadOnAdd" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="UploadWorkerThreads" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>

@@ -43,23 +43,32 @@ namespace AlmaDUploader
 
         public Ingests()
         {
-            ViewSubmitted = false;
             InitializeComponent();
-            LoadCollections();
+            Init();
+        }
 
-            // Watch for an updated collection file
-            FileSystemWatcher watcher = new FileSystemWatcher();
-            watcher.Path = Utils.Utilities.GetDataDirectory();
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
-            watcher.Filter = "MDImportProfiles.xml";
-            watcher.Changed += new FileSystemEventHandler(OnCollectionsChanged);
-            watcher.EnableRaisingEvents = true;
+        private void CollectionListChanged(object sender, PropertyChangedEventArgs e)
+        {
+            cbCollections.SelectedIndex = 0;
+        }
+
+        public void Init()
+        {
+            ViewSubmitted = false;
+            cbCollections.DisplayMemberPath = "DisplayName";
+            cbCollections.SelectedValuePath = "Id";
+            cbCollections.ItemsSource = App.MDImportProfiles.Profiles.Values;
+            App.MDImportProfiles.PropertyChanged += CollectionListChanged;
+            cbCollections.SelectedIndex = 0;
+            btnAddIngest.IsEnabled = cbCollections.Items.Count > 0;
+            btnMdProfileInfo.IsEnabled = cbCollections.Items.Count > 0;
         }
 
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
         {
             Ingest i = e.Item as Ingest;
-            if (i.MDImportProfile == (long)cbCollections.SelectedValue)
+            if (cbCollections.SelectedValue != null && 
+                i.MDImportProfile == (long)cbCollections.SelectedValue)
                 e.Accepted = ((ViewSubmitted && i.Status == IngestStatus.Submitted) ||
                     (!ViewSubmitted && i.Status != IngestStatus.Submitted));
             else e.Accepted = false;
@@ -191,7 +200,7 @@ namespace AlmaDUploader
         private void Ingest_DragOver(object sender, DragEventArgs e)
         {
             // Perhaps remove this check and only create ingests for the folders
-            if (IsFoldersOnly(e)) e.Effects = DragDropEffects.Copy;
+            if (IsFoldersOnly(e) && btnAddIngest.IsEnabled) e.Effects = DragDropEffects.Copy;
             else e.Effects = DragDropEffects.None;
 
             // Mark the event as handled, so TextBox's native DragOver handler is not called.
@@ -203,7 +212,6 @@ namespace AlmaDUploader
             pbIngests.IsActive = true;
             long mdImportProfileId = (long)cbCollections.SelectedValue;
 
-            //List<Ingest> ingests = new List<Ingest>();
             var ingests = new List<Task<Ingest>>();
 
             string[] fileNames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
@@ -222,13 +230,15 @@ namespace AlmaDUploader
             pbIngests.IsActive = false;
         }
 
-        private void RefreshCollections_Click(object sender, RoutedEventArgs e)
+        private async void RefreshCollections_Click(object sender, RoutedEventArgs e)
         {
-            LoadCollections();
+            await App.MDImportProfiles.Load();
         }
 
         private void Collection_Changed(object sender, SelectionChangedEventArgs e)
         {
+            btnAddIngest.IsEnabled = cbCollections.Items.Count > 0;
+            btnMdProfileInfo.IsEnabled = cbCollections.Items.Count > 0;
             RefreshIngestList();
         }
 
@@ -259,9 +269,7 @@ namespace AlmaDUploader
 
         private void IngestUpload_Click(object sender, RoutedEventArgs e)
         {
-            // pbIngests.IsActive = true;
             // TODO: Make this ForEach
-
             var ingests = (dgIngests.SelectedItems.Count == 0) ?
                 dgIngests.Items.Cast<Ingest>().Where(i => i.Status == IngestStatus.Pending || i.Status == IngestStatus.New).ToList() :
                 dgIngests.SelectedItems.Cast<Ingest>().ToList();
@@ -311,38 +319,9 @@ namespace AlmaDUploader
             db.SaveChanges();
         }
 
-        private void cbCollections_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            System.Diagnostics.Process.Start("notepad.exe", Utilities.GetDataDirectory() + @"\MDImportProfiles.xml");
-        }
-
         #endregion
 
         #region Helpers
-
-        private void LoadCollections(bool hardRefresh = true)
-        {
-            cbCollections.ItemsSource = null;
-            cbCollections.Items.Clear();
-            cbCollections.Items.Add("Loading...");
-
-            if (hardRefresh) App.LoadCollections();
-            else App.LoadCollectionsFromFile();
-
-            cbCollections.Items.Clear();
-            cbCollections.DisplayMemberPath = "DisplayName";
-            cbCollections.SelectedValuePath = "Id";
-            cbCollections.ItemsSource = App.MDImportProfiles.Values;
-            cbCollections.SelectedIndex = 0;
-        }
-
-        private void OnCollectionsChanged(object sender, FileSystemEventArgs e)
-        {
-            App.Current.Dispatcher.Invoke((Action)delegate()
-            {
-                LoadCollections(false);
-            });
-        }
 
         private async void LoadIngests()
         {
@@ -366,7 +345,8 @@ namespace AlmaDUploader
 
         private void RefreshIngestList()
         {
-            if (cbCollections.SelectedItem != null)
+            long i;
+            if (cbCollections.SelectedValue != null && long.TryParse(cbCollections.SelectedValue.ToString(), out i))
             { 
                 CollectionViewSource csv = (CollectionViewSource)FindResource("IngestsView");
                 if (csv != null && csv.View != null)

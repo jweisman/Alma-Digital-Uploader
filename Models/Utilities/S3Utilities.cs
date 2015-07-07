@@ -38,15 +38,12 @@ namespace AlmaDUploader.Models
             if (String.IsNullOrEmpty(BucketName))
                 BucketName = Properties.Settings.Default.StorageBucket;
 
-            switch (BucketName)
-            {
-                case "almad-eu":
-                    return Amazon.RegionEndpoint.EUWest1;
-                case "almad-ap":
-                    return Amazon.RegionEndpoint.SAEast1;
-                default:
-                    return Amazon.RegionEndpoint.USEast1;
-            }
+            if (BucketName.IndexOf("eu") >= 0)
+                return Amazon.RegionEndpoint.EUWest1;
+            else if (BucketName.IndexOf("ap") >= 0)
+                return Amazon.RegionEndpoint.SAEast1;
+            else
+                return Amazon.RegionEndpoint.USEast1;
         }
     }
 }

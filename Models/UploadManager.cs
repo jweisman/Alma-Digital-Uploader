@@ -68,7 +68,7 @@ namespace AlmaDUploader.Models
         }
         public double UploadSpeed
         {
-            get { return RunningTasks.Values.Select(s => s.Speed).Sum(); }
+            get { lock (RunningTasks) return RunningTasks.Values.Select(s => s.Speed).Sum(); }
         }
 
         private void UpdateCounters()
@@ -148,7 +148,7 @@ namespace AlmaDUploader.Models
         public async void Init()
         {
             // give everything a chance to start up before loading existing files
-            await Task.Delay(10000);
+            await Task.Delay(30000);
 
             // Call once to queue up any waiting uploads
             db.IngestFiles.Where(f => f.Status == IngestFileStatus.Waiting
@@ -208,23 +208,6 @@ namespace AlmaDUploader.Models
         {
             WorkerError(db.IngestFiles.Find(FileId), new OperationCanceledException());
         }
-
-        /*
-        void WorkerCancelled(IngestFile file)
-        {
-            App.Current.Dispatcher.Invoke((Action)delegate()
-            {
-                file.Status = IngestFileStatus.New;
-                db.SaveChanges();
-            });
-
-            CancellationTokenSource source = null;
-            workerTokens.TryRemove(file.Id, out source);
-
-            lock (RunningTasks) RunningTasks.Remove(file.Id);
-            UpdateCounters();
-        }
-         */
 
         void WorkerError(IngestFile file, Exception e)
         {
@@ -325,7 +308,7 @@ namespace AlmaDUploader.Models
                     await s3.UploadAsync(request, token);
                 }
 
-                // Upload thumbnail
+                // Upload thumbnail if setting checked
                 if (Properties.Settings.Default.UploadThumbnails && file.Thumbnail != null)
                 {
                     using (MemoryStream thumbnail = new MemoryStream(file.Thumbnail))
@@ -340,17 +323,16 @@ namespace AlmaDUploader.Models
                                 file.FileName.Replace("\\", "/") + ".thumb"),
                             InputStream = thumbnail
                         };
-                        // request.UploadProgressEvent += displayProgress;
                         await s3.UploadAsync(request, token);
                     }
                 }
+                // TODO: BUG-Occasional file remains in 100% complete, Uploading status. Is this not called?
                 Done(file);
             }
             catch (Exception e)
             { Error(file, e); }
         }
 
-        //private void displayProgress(object sender, StreamTransferProgressArgs args)
         private void displayProgress(object sender, UploadProgressArgs args)
         {
             App.Current.Dispatcher.Invoke((Action)delegate()

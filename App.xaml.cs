@@ -54,39 +54,17 @@ namespace AlmaDUploader
             get { return _uploadManager; }
         }
 
-        protected static Dictionary<long, MDImportProfile> _mdImportProfiles = new Dictionary<long, MDImportProfile>();
-        public static Dictionary<long, MDImportProfile> MDImportProfiles
+        protected static MDImportProfiles _mdImportProfiles;
+        public static MDImportProfiles MDImportProfiles
         {
             get { return _mdImportProfiles; }
         }
 
-        public static void LoadCollections()
-        {
-            // TOTO: Make load asynchornous when using REST
-            // Load from web service and save file
-            LoadCollectionsFromFile();
-        }
-
-        public static void LoadCollectionsFromFile()
-        {
-            _mdImportProfiles.Clear();
-
-            MDImportProfiles mdImportProfiles;
-
-            using (FileStream stream = new FileStream(Utils.Utilities.GetDataDirectory() + @"\MDImportProfiles.xml", FileMode.Open))
-            {
-                XmlReader reader = new XmlTextReader(stream);
-
-                XmlSerializer deserializer = new XmlSerializer(typeof(MDImportProfiles));
-                mdImportProfiles = (MDImportProfiles)deserializer.Deserialize(reader);
-            }
-
-            mdImportProfiles.Profiles.ForEach(p => _mdImportProfiles.Add(p.Id, p));
-        }
-
-        private void App_Startup(object sender, StartupEventArgs e)
+        private async void App_Startup(object sender, StartupEventArgs e)
         {
             _uploadManager = new UploadManager();
+            _mdImportProfiles = new MDImportProfiles();
+            await _mdImportProfiles.Load();
 
             // Ensure the current culture passed into bindings is the OS culture.
             // By default, WPF uses en-US as the culture, regardless of the system settings.

@@ -55,10 +55,10 @@
                 <StackPanel>
                     <Label Content="Storage Location" Target="{Binding ElementName=cmbBucket}"/>
                     <ComboBox x:Name="cmbBucket" Width="150" SelectedValuePath="Tag" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=StorageBucket, Mode=TwoWay}">
-                        <ComboBoxItem Tag="almad-na">North America</ComboBoxItem>
-                        <ComboBoxItem Tag="almad-eu">Europe</ComboBoxItem>
-                        <ComboBoxItem Tag="almad-ap">Asia Pacific</ComboBoxItem>
-                        <ComboBoxItem Tag="almadtest">Test</ComboBoxItem>
+                        <ComboBoxItem Tag="na-st01.ext.exlibrisgroup.com">North America</ComboBoxItem>
+                        <ComboBoxItem Tag="eu-st01.ext.exlibrisgroup.com">Europe</ComboBoxItem>
+                        <ComboBoxItem Tag="ap-st01.ext.exlibrisgroup.com">Asia Pacific</ComboBoxItem>
+                        <ComboBoxItem Tag="almad-test">Test</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
                 <mui:BBCodeBlock BBCode="The Alma API key can be created at the [url=https://developers.exlibrisgroup.com/]Developer Network[/url]." Margin="0,10,0,3"/>
