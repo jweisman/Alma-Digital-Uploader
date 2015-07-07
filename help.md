@@ -45,12 +45,12 @@ When you first open the Uploader, you will be taken to the Settings screen to co
 The uploader uses several configuration settings that can be retrieved from Alma.
 
 * The institution code is the code provided when logging, for example 01MYUNIV_INST
-* The storage access key and secret can be retrieved in Alma by goung to Resource Management Configuration, Digital Storage Keys.
+* The storage access key and secret can be retrieved in Alma by goung to Resource Management Configuration, General, Digital Storage Keys.
 * The storage location should be selected based on your Alma region.
 
 ![settings](images/help/settings.png)
 
-<p style="color: red">SCREENSHOT OF ACCESS KEY IN ALMA</p>
+![storage key](images/help/storage-key.png)
 
 The API key can be created in the <a href="https://developers.exlibrisgroup.com/" target="_blank">Developer Network</a>. You can create an application with any name you choose, and select the Configuration API and production read only. (Details on how to create an application are available <a href="https://developers.exlibrisgroup.com/alma/apis/" target="_blank">here</a>.)
 
