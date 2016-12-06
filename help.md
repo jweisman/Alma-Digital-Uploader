@@ -63,7 +63,7 @@ You can control how the Uploader behaves with the following options:
 
 * Upload files- specifies whether files are immediately queued for upload when added. Default is manual, which means you need to manually select files or ingests to begin uploading
 * Submit ingests- specifies whether ingests are submitted as soon as uploading is complete and metadata is provided. Select "when ready" if you will be uploading prepared ingests, select "manually" if you need to manage the ingests before they are submitted for processing. Default is manual, which means you need to manually submit ingests when they are ready.
-* Upload thumbnails- specifies whether thumbnails should be uploaded when available. Default is on
+* Upload thumbnails- specifies whether thumbnails should be uploaded when available. Default is off, since Alma produces thumbnails automatically
 
 ### <a id="settings-upload"></a>Upload Manager
 Using this screen, you can control the upload manager, which handles the uploading of the files. Specify the number of simultaneous uploads you wish to perform (default 3), or pause the upload manager to temporarily prevent additional files from being uploaded.
@@ -112,6 +112,9 @@ If you've updated your MD import profiles in Alma and you want to refresh the li
 To see basic information about the collection, including metadata format and the expected metadata file name, click the info icon next to the collection list.
 
 ![Collection Info](images/help/collection-info.png)
+
+### <a id="collections-trigger"></a>Trigger MD Import
+Triggers an execution of the import job in Alma.
 
 <a href="#toc">Top</a>
 <hr/>
