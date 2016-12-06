@@ -53,7 +53,7 @@ namespace AlmaDUploader.Models
                     mdImportProfiles.Profiles.ForEach(p => this.Profiles.Add(p.Id, p));
                     OnPropertyChanged("Profiles");
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException ex)
                 {
                     // do nothing and just deal with an empty collection list
                 }
@@ -88,9 +88,37 @@ namespace AlmaDUploader.Models
         public string MDFileName { get; set; }
         [XmlElement("source_format")]
         public string MDFormat { get; set; }
+
         public string DisplayName
         {
-            get { return String.Format("{0} ({1})", Digital.CollectionName, Name); }
+            get { return String.Format("{0} ({1})", Digital.Collection.Name, Name); }
+        }
+
+        public async Task<bool> Trigger()
+        {
+            // Check for API Key
+            if (String.IsNullOrEmpty(AlmaDUploader.Properties.Settings.Default.AlmaAPIKey))
+                return false;
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("apikey",
+                        AlmaDUploader.Properties.Settings.Default.AlmaAPIKey);
+
+                try
+                {
+                    var response = await client.PostAsync(String.Format("{0}/conf/md-import-profiles/{1}?op=run",
+                        System.Configuration.ConfigurationManager.AppSettings["AlmaApiUrl"], this.Id),
+                        new StringContent("", Encoding.UTF8, "application/xml"));
+
+                    return response.IsSuccessStatusCode;
+                }
+                catch (HttpRequestException ex)
+                {
+                    return false;
+                }
+            }
         }
     }
 
@@ -109,6 +137,16 @@ namespace AlmaDUploader.Models
     public class DigitalDetails
     {
         [XmlElement("collection_assignment")]
-        public string CollectionName { get; set; }
+        public Collection Collection { get; set; }
+    }
+
+    public class Collection
+    {
+        [XmlAttribute("desc")]
+        public string Name { get; set; }
+
+        [XmlText]
+        public string Id { get; set; }
+        
     }
 }

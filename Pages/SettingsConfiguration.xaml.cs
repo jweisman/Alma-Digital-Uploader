@@ -17,6 +17,7 @@ using FirstFloor.ModernUI.Windows.Navigation;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.Runtime;
+using AlmaDUploader.Models;
 
 namespace AlmaDUploader
 {
@@ -59,7 +60,7 @@ namespace AlmaDUploader
             bbTestResults.BBCode = "Testing configuration..." + Environment.NewLine;
             bbTestResults.BBCode += "Writing a file to storage...   ";
             // try to write a file
-            IAmazonS3 client = new AmazonS3Client(txtAccessKey.Text, txtAccessSecret.Text, Amazon.RegionEndpoint.USEast1);
+            IAmazonS3 client = new AmazonS3Client(txtAccessKey.Text, txtAccessSecret.Text, S3Utilities.GetEndPoint());
             try { 
                 PutObjectRequest request = new PutObjectRequest()
                     {

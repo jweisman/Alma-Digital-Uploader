@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         Title="Alma Digital Uploader"  IsTitleVisible="True"
-        Height="500" Width="800"
+        Height="500" Width="850"
         ContentSource="/Pages/Ingests.xaml"
         Closing="Window_Closing"
         >

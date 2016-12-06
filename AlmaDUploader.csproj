@@ -29,7 +29,7 @@
     <SupportUrl>http://jweisman.github.io/Alma-Digital-Uploader/help.html</SupportUrl>
     <ProductName>Alma Digital Uploader</ProductName>
     <PublisherName>Alma Digital</PublisherName>
-    <ApplicationRevision>31</ApplicationRevision>
+    <ApplicationRevision>33</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -267,6 +267,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\DUBLIN_CORE.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\MDImportProfiles.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -334,7 +337,7 @@
   -->
   <!-- Sign executable, as per https://robindotnet.wordpress.com/2013/02/24/windows-8-and-clickonce-the-definitive-answer-2/ -->
   <Target Name="BeforePublish">
-    <Exec Command="&quot;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\bin\signtool.exe&quot; sign /n &quot;Joshua Weisman&quot; /v &quot;$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)&quot;" />
+    <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\x86\signtool.exe&quot; sign /n &quot;Joshua Weisman&quot; /v &quot;$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)&quot;" />
   </Target>
   <!-- Handle SQLite Interop -->
   <ItemGroup>

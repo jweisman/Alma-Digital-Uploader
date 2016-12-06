@@ -62,6 +62,7 @@ namespace AlmaDUploader
             cbCollections.SelectedIndex = 0;
             btnAddIngest.IsEnabled = cbCollections.Items.Count > 0;
             btnMdProfileInfo.IsEnabled = cbCollections.Items.Count > 0;
+            btnMdProfileTrigger.IsEnabled = cbCollections.Items.Count > 0;
         }
 
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
@@ -235,10 +236,27 @@ namespace AlmaDUploader
             await App.MDImportProfiles.Load();
         }
 
+        private async void MDProfileTrigger_Click(object sender, RoutedEventArgs e)
+        {
+            bool success = await ((MDImportProfile)cbCollections.SelectedItem).Trigger();
+            if (success)
+            {
+                MessageBox.Show("MD Import job successfully triggered.", "Trigger MD Import Job", 
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Error when triggering MD Import job.", "Trigger MD Import Job", 
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+        }
+
         private void Collection_Changed(object sender, SelectionChangedEventArgs e)
         {
             btnAddIngest.IsEnabled = cbCollections.Items.Count > 0;
             btnMdProfileInfo.IsEnabled = cbCollections.Items.Count > 0;
+            btnMdProfileTrigger.IsEnabled = cbCollections.Items.Count > 0;
             RefreshIngestList();
         }
 
