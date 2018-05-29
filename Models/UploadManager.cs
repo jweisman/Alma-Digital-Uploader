@@ -288,7 +288,7 @@ namespace AlmaDUploader.Models
                 file.Status = IngestFileStatus.Uploading;
             });
 
-            IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetEndPoint());
+            IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetConfig());
             try
             {
                 TransferUtility s3 = new TransferUtility(client);

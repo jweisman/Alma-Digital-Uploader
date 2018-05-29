@@ -108,7 +108,7 @@ namespace AlmaDUploader.Models
             if (Status != IngestFileStatus.Uploaded)
                 return;
 
-            IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetEndPoint());
+            IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetConfig());
             DeleteObjectsRequest request = new DeleteObjectsRequest();
             request.BucketName = Properties.Settings.Default.StorageBucket;
             

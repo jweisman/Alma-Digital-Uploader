@@ -60,7 +60,7 @@ namespace AlmaDUploader
             bbTestResults.BBCode = "Testing configuration..." + Environment.NewLine;
             bbTestResults.BBCode += "Writing a file to storage...   ";
             // try to write a file
-            IAmazonS3 client = new AmazonS3Client(txtAccessKey.Text, txtAccessSecret.Text, S3Utilities.GetEndPoint());
+            IAmazonS3 client = new AmazonS3Client(txtAccessKey.Text, txtAccessSecret.Text, S3Utilities.GetConfig());
             try { 
                 PutObjectRequest request = new PutObjectRequest()
                     {

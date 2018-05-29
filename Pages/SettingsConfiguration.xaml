@@ -58,9 +58,11 @@
                         <ComboBoxItem Tag="na-st01.ext.exlibrisgroup.com">North America</ComboBoxItem>
                         <ComboBoxItem Tag="eu-st01.ext.exlibrisgroup.com">Europe</ComboBoxItem>
                         <ComboBoxItem Tag="ap-st01.ext.exlibrisgroup.com">Asia Pacific</ComboBoxItem>
+                        <ComboBoxItem Tag="ca-st01.ext.exlibrisgroup.com">Canada</ComboBoxItem>
                         <ComboBoxItem Tag="na-test-st01.ext.exlibrisgroup.com">North America Sandbox</ComboBoxItem>
                         <ComboBoxItem Tag="eu-test-st01.ext.exlibrisgroup.com">Europe Sandbox</ComboBoxItem>
                         <ComboBoxItem Tag="ap-test-st01.ext.exlibrisgroup.com">Asia Pacific Sandbox</ComboBoxItem>
+                        <ComboBoxItem Tag="ca-test-st01.ext.exlibrisgroup.com">Canada Sandbox</ComboBoxItem>
                         <ComboBoxItem Tag="almad-test">Test</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>

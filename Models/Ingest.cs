@@ -166,7 +166,7 @@ namespace AlmaDUploader.Models
             // Cancel any files in progress
             CancelUpload();
 
-            IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetEndPoint());
+            IAmazonS3 client = new AmazonS3Client(App.GetAWSCredentials(), S3Utilities.GetConfig());
             DeleteObjectsRequest request = new DeleteObjectsRequest();
             request.BucketName = Properties.Settings.Default.StorageBucket;
             if (Files.Any(f => f.Status == IngestFileStatus.Uploaded))

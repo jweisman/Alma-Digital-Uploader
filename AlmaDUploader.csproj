@@ -29,7 +29,7 @@
     <SupportUrl>http://jweisman.github.io/Alma-Digital-Uploader/help.html</SupportUrl>
     <ProductName>Alma Digital Uploader</ProductName>
     <PublisherName>Alma Digital</PublisherName>
-    <ApplicationRevision>33</ApplicationRevision>
+    <ApplicationRevision>34</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -73,14 +73,15 @@
     <ManifestKeyFile>codesign.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AWSSDK">
-      <HintPath>packages\AWSSDK.2.3.14.0\lib\net45\AWSSDK.dll</HintPath>
+    <Reference Include="AWSSDK, Version=2.3.55.2, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>packages\AWSSDK.2.3.55.2\lib\net45\AWSSDK.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -269,6 +270,7 @@
   <ItemGroup>
     <Content Include="Data\DUBLIN_CORE.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Data\MDImportProfiles.xml">
       <SubType>Designer</SubType>
@@ -336,9 +338,12 @@
   </Target>
   -->
   <!-- Sign executable, as per https://robindotnet.wordpress.com/2013/02/24/windows-8-and-clickonce-the-definitive-answer-2/ -->
+  <!-- Comment out as signing certificate is no longer valid -->
+  <!--
   <Target Name="BeforePublish">
     <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\x86\signtool.exe&quot; sign /n &quot;Joshua Weisman&quot; /v &quot;$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)&quot;" />
   </Target>
+  -->
   <!-- Handle SQLite Interop -->
   <ItemGroup>
     <AdditionalPublishFile Include="packages\System.Data.SQLite.Core.1.0.94.0\build\net45\**\*.dll">
