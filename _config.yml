@@ -8,5 +8,5 @@ baseurl: /Alma-Digital-Uploader
 #github_username:  jekyll
 
 # Build settings
-markdown: redcarpet
+#markdown: redcarpet
 pygments: true
