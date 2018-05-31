@@ -52,7 +52,7 @@ The uploader uses several configuration settings that can be retrieved from Alma
 
 ![storage key](images/help/storage-key.png)
 
-The API key can be created in the <a href="https://developers.exlibrisgroup.com/" target="_blank">Developer Network</a>. You can create an application with any name you choose, and select the Configuration API and production read only. (Details on how to create an application are available <a href="https://developers.exlibrisgroup.com/alma/apis/" target="_blank">here</a>.)
+The API key can be created in the <a href="https://developers.exlibrisgroup.com/" target="_blank">Developer Network</a>. You can create an application with any name you choose, and select the Configuration API and production read/write (write access needed to execute an import profile). (Details on how to create an application are available <a href="https://developers.exlibrisgroup.com/alma/apis/" target="_blank">here</a>.)
 
 ![Developer Network](images/help/dev-network.png)
 
