@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -141,13 +142,13 @@ namespace AlmaDUploader.Models
                         Properties.Settings.Default.InstitutionCode,
                         this.MDImportProfile,
                         this.Directory,
-                        App.MDImportProfiles.Profiles[this.MDImportProfile].MDFileName),
+                        App.MDImportProfiles.Profiles[this.MDImportProfile].MDFileName.Replace("*", "md")),
                         metadata);
             }
             else // confirm there is a file with the MD name
             {
                 string mdFileName = App.MDImportProfiles.Profiles[this.MDImportProfile].MDFileName;
-                if (!this.Files.Any(f => f.FileName == mdFileName))
+                if (!this.Files.Any(f => Regex.IsMatch(f.FileName, Utilities.FilterToRegex(mdFileName))))
                 {
                     this.ErrorMessage = String.Format("No file with the name {0} exists. Ingest cannot be submitted for processing.",
                         mdFileName);

@@ -40,6 +40,20 @@ namespace AlmaDUploader.Utils
         }
 
         /// <summary>
+        /// Converts a filter string to a RegEx pattern
+        /// </summary>
+        /// <param name="filter">Filter string to convert to RegEx</param>
+        /// <returns></returns>
+        public static string FilterToRegex(string filter)
+        {
+            foreach (char x in @"\+?|{[()^$.#")
+            {
+                filter = filter.Replace(x.ToString(), @"\" + x.ToString());
+            }
+            return string.Format("^{0}$", filter.Replace("*", ".*"));
+        }
+
+        /// <summary>
         /// Returns the relative path of a file based on a starting point
         /// </summary>
         /// <param name="fullPath">Full path of the file</param>
