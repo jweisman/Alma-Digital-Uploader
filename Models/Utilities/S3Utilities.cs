@@ -42,7 +42,13 @@ namespace AlmaDUploader.Models
             if (BucketName.StartsWith("eu"))
                 config.RegionEndpoint = Amazon.RegionEndpoint.EUCentral1;
             else if (BucketName.StartsWith("ap"))
-                config.RegionEndpoint = Amazon.RegionEndpoint.SAEast1;
+            { 
+                //config.RegionEndpoint = Amazon.RegionEndpoint.SAEast1;
+                // Asia region endpoint not updated in the 2.* AWSSDK. Build config manually.
+                config.ServiceURL = "https://s3.ap-southeast-1.amazonaws.com";
+                config.SignatureMethod = Amazon.Runtime.SigningAlgorithm.HmacSHA256;
+                config.SignatureVersion = "4";
+            }
             else if (BucketName.StartsWith("ca"))
             { 
                 // Canada region not available in the 2.* AWSSDK. Build config manually.
