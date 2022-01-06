@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AlmaDUploader.exe" size="875008">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AlmaDUploader.exe" size="874496">
       <assemblyIdentity name="AlmaDUploader" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>nDD0vID+s/x3g1mEzuwSg0mWQKAp6P8+/ziw8GNC5Go=</dsig:DigestValue>
+        <dsig:DigestValue>E+uX1jl6PC52LQtTstPNRTmwAPYzUwMBIRSzPymQji8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
