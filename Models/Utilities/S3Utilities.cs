@@ -53,6 +53,10 @@ namespace AlmaDUploader.Models
                 config.SignatureMethod = Amazon.Runtime.SigningAlgorithm.HmacSHA256;
                 config.SignatureVersion = "4";
             }
+            else if (BucketName.StartsWith("cn"))
+            {
+                config.RegionEndpoint = Amazon.RegionEndpoint.CNNorth1;
+            }
             else
                 config.RegionEndpoint = Amazon.RegionEndpoint.USEast1;
 
