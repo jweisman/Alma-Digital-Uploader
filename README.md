@@ -20,7 +20,7 @@ Contributions are welcome. Feel free to submit a pull request.
 Issues can be logged in the Github issue tracker.
 
 ## Acknowledgements
-This applicaiton uses the excellent [Modern UI for WPF][1]. 
+This application uses the excellent [Modern UI for WPF][1]. 
 
 ## License
 This application is provided under the [MIT license], which means in short that you can do with it as you please.
